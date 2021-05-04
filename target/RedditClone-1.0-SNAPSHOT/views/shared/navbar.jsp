@@ -17,32 +17,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="../posts/index.jsp">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="table.jsp?rows=3&cols=5">3x5</a>
-                    <a class="dropdown-item" href="table.jsp?rows=6&cols=6">6x6</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="table.jsp?rows=8&cols=10">8x10</a>
-                </div>
+                <a class="nav-link" href="../users/login.jsp">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link" href="../users/register.jsp">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../users/profile.jsp">Profile</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <%
-                java.util.Date date= new java.util.Date();
-                out.println( String.valueOf(date));
-            %>
-        </form>
     </div>
 </nav>
 
