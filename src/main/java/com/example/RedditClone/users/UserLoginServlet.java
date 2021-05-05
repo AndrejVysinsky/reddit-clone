@@ -27,13 +27,13 @@ public class UserLoginServlet extends HttpServlet {
         {
             //logged in, save user to session
             HttpSession session = request.getSession(true);
-            session.setAttribute(Parameters.SessionParams.sessionUser, user);
-            response.sendRedirect(Redirects.UserRedirects.usersLogin + "?message=success");
+            session.setAttribute(Parameters.SessionParams.sessionUser, userDb);
+            response.sendRedirect(Redirects.UserRedirects.userLogin + "?message=success");
         }
         else
         {
             //wrong password or user does not exist
-            response.sendRedirect(Redirects.UserRedirects.usersLogin + "?message=failed");
+            response.sendRedirect(Redirects.UserRedirects.userLogin + "?message=failed");
         }
     }
 }

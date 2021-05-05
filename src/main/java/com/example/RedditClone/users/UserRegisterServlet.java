@@ -31,19 +31,19 @@ public class UserRegisterServlet extends HttpServlet {
             {
                 //add new user to db
                 userController.RegisterUser(user);
-                response.sendRedirect(Redirects.UserRedirects.usersRegister + "?message=success");
+                response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=success");
             }
             else
             {
                 //password mismatch
-                response.sendRedirect(Redirects.UserRedirects.usersRegister + "?message=passwordMismatch");
+                response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=passwordMismatch");
             }
 
         }
         else
         {
             //userName is already taken, show error
-            response.sendRedirect(Redirects.UserRedirects.usersRegister + "?message=nameTaken");
+            response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=nameTaken");
         }
     }
 }

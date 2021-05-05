@@ -26,6 +26,6 @@ public class UserLogoutServlet extends HttpServlet {
             session.removeAttribute(Parameters.SessionParams.sessionUser);
         }
 
-        response.sendRedirect(Redirects.UserRedirects.usersLogin);
+        response.sendRedirect(Redirects.UserRedirects.userLogin);
     }
 }

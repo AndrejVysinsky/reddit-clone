@@ -9,11 +9,9 @@
         <%@include file="../shared/navbar.jsp"%>
 
         <%
-            User user = (User)session.getAttribute(Parameters.SessionParams.sessionUser);
-
-            if (user == null)
+            if (sessionUser == null)
             {
-                response.sendRedirect(Redirects.UserRedirects.usersLogin);
+                response.sendRedirect(Redirects.UserRedirects.userLogin);
                 return;
             }
         %>
@@ -22,7 +20,7 @@
             <h5>Profile</h5>
             <div class="form-group">
                 <label class="font-weight-bold" for="<%=Parameters.UserParams.userName%>">User name:</label>
-                <input class="form-control" type="text" name="<%=Parameters.UserParams.userName%>" disabled="disabled" value="<%=user.getUserName()%>">
+                <input class="form-control" type="text" name="<%=Parameters.UserParams.userName%>" disabled="disabled" value="<%=sessionUser.getUserName()%>">
             </div>
 
             <div class="form-group">

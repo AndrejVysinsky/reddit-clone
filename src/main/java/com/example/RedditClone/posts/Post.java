@@ -1,22 +1,33 @@
 package com.example.RedditClone.posts;
 
-import com.example.RedditClone.comments.Comment;
 import com.example.RedditClone.users.User;
-
-import java.util.List;
 
 public class Post
 {
+    private Integer postId;
     private String header;
     private String body;
     private User author;
     private int points;
+
+    public Post()
+    {
+
+    }
 
     public Post(String header, String body, User author, int points) {
         this.header = header;
         this.body = body;
         this.author = author;
         this.points = points;
+    }
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
     }
 
     public String getHeader() {

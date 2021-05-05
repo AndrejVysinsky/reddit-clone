@@ -5,6 +5,8 @@ import com.example.RedditClone.helpers.ParameterMapping;
 import com.example.RedditClone.helpers.Parameters;
 
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,24 +37,46 @@ public class UserController
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, userName);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next())
-            {
-                User user = new User();
-
-                user.setUserId(rs.getInt(Parameters.UserParams.userId));
-                user.setUserName(rs.getString(Parameters.UserParams.userName));
-                user.setPassword(rs.getString(Parameters.UserParams.userPassword));
-                //user.setProfileImage(rs.getString(Parameters.UserParams.userPicture)); not in db currently
-
-                return user;
-            }
+            return GetUserFromResultSet(ps.executeQuery());
 
         } catch (NamingException | SQLException e) {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public User GetUserById(Integer userId)
+    {
+        String sql = "SELECT * FROM users WHERE userId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, userId);
+
+            return GetUserFromResultSet(ps.executeQuery());
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private User GetUserFromResultSet(ResultSet rs) throws SQLException {
+        if (rs.next())
+        {
+            User user = new User();
+
+            user.setUserId(rs.getInt(Parameters.UserParams.userId));
+            user.setUserName(rs.getString(Parameters.UserParams.userName));
+            user.setPassword(rs.getString(Parameters.UserParams.userPassword));
+            //user.setProfileImage(rs.getString(Parameters.UserParams.userPicture)); not in db currently
+
+            return user;
+        }
         return null;
     }
 
@@ -107,5 +131,11 @@ public class UserController
         }
 
         return null;
+    }
+
+    public User GetLoggedInUser(HttpServletRequest request)
+    {
+        HttpSession session = request.getSession(true);
+        return (User)session.getAttribute(Parameters.SessionParams.sessionUser);
     }
 }

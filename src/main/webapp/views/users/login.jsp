@@ -9,9 +9,7 @@
         <%@include file="../shared/navbar.jsp"%>
 
         <%
-            User user = (User)session.getAttribute(Parameters.SessionParams.sessionUser);
-
-            if (user != null)
+            if (sessionUser != null)
             {
                 response.sendRedirect("profile.jsp");
                 return;

@@ -1,6 +1,7 @@
 <%@ page import="com.example.RedditClone.posts.PostsController" %>
-<%@ page import="com.example.RedditClone.users.User" %>
 <%@ page import="com.example.RedditClone.helpers.Parameters" %>
+<%@ page import="com.example.RedditClone.posts.Post" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -9,24 +10,53 @@
     </head>
     <body>
         <%@include file="../shared/navbar.jsp"%>
-        <div class="my-div">
-        <%
-            User loggedInUser = null; // get logged in user
-        %>
+        <div class="container">
 
-        <form action="${pageContext.request.contextPath}/posts-create">
-            <h5>Create post</h5>
-            <div class="form-group">
-                <input type="text" name="<%=Parameters.PostParams.postHeader%>" class="form-control">
-            </div>
-            <div class="form-group">
-                <textarea type="text" name="<%=Parameters.PostParams.postBody%>" class="form-control" rows="10"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="hidden" name="<%=Parameters.UserParams.userId%>" class="form-control" value="<%=loggedInUser != null ? loggedInUser.getUserId() : 0%>">
-            </div>
-            <button formmethod="post" class="btn btn-primary">Odoslať</button>
-        </form>
+            <%
+                PostsController postsController = new PostsController();
+                ArrayList<Post> posts = (ArrayList<Post>)postsController.GetAllPosts();
+
+                if (sessionUser != null)
+                {
+            %>
+                <a class="btn btn-primary" href="create.jsp">Add post</a>
+            <%
+                }
+
+                for (Post post : posts) {
+            %>
+                <div class="row bg-dark rounded" style="padding: 10px; margin: 4px;">
+                    <div class="col-auto text-center">
+                        <span class="align-middle fa fa-arrow-up text-white"></span><br>
+                        <span class="align-middle text-white"><%=post.getPoints()%></span><br>
+                        <span class="align-middle fa fa-arrow-down text-white"></span>
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <a class="font-weight-thin" style="color:dimgrey">
+                                Posted by u/<%=post.getAuthor().getUserName()%>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <a class="text-white"><h4 class="text-left"><%=post.getHeader()%>
+                            </h4></a>
+                        </div>
+                        <div class="row text-left text-white">
+                            <%=post.getBody()%>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            <%
+                }
+
+                if (posts.size() == 0)
+                {
+            %>
+                <h6>No posts found.</h6>
+            <%
+                }
+            %>
         </div>
     </body>
 </html>
