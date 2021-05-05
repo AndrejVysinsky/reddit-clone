@@ -2,6 +2,7 @@ package com.example.RedditClone.posts;
 
 import com.example.RedditClone.helpers.GsonMapping;
 import com.example.RedditClone.helpers.ParameterMapping;
+import com.example.RedditClone.helpers.Redirects;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,7 +25,7 @@ public class PostsCreateServlet extends HttpServlet {
 
         if (post == null)
         {
-            response.sendRedirect("/views/posts/index.jsp");
+            response.sendRedirect(Redirects.PostRedirects.postsIndex);
             return;
         }
 

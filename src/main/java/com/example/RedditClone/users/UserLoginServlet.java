@@ -1,5 +1,8 @@
 package com.example.RedditClone.users;
 
+import com.example.RedditClone.helpers.Parameters;
+import com.example.RedditClone.helpers.Redirects;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -13,7 +16,24 @@ public class UserLoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        UserController userController = new UserController();
+        User user = userController.MapParamsToUser(request.getParameterMap());
 
+        User userDb = userController.LoginUser(user);
+
+        if (userDb != null)
+        {
+            //logged in, save user to session
+            HttpSession session = request.getSession(true);
+            session.setAttribute(Parameters.SessionParams.sessionUser, user);
+            response.sendRedirect(Redirects.UserRedirects.usersLogin + "?message=success");
+        }
+        else
+        {
+            //wrong password or user does not exist
+            response.sendRedirect(Redirects.UserRedirects.usersLogin + "?message=failed");
+        }
     }
 }

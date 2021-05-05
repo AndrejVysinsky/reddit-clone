@@ -77,4 +77,35 @@ public class UserController
 
         return false;
     }
+
+    public User LoginUser(User user)
+    {
+        String sql = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getPassword());
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+            {
+                User userDb = new User();
+
+                userDb.setUserId(rs.getInt(Parameters.UserParams.userId));
+                userDb.setUserName(rs.getString(Parameters.UserParams.userName));
+                //userDb.setProfileImage(rs.getString(Parameters.UserParams.userImage));
+
+                return userDb;
+            }
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

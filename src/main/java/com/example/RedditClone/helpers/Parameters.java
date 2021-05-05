@@ -16,6 +16,11 @@ public class Parameters
         public static String userName = "userName";
         public static String userPassword = "userPassword";
         public static String userPasswordConfirmation = "userPasswordConfirmation";
-        public static String userPicture = "userPicture";
+        public static String userImage = "userImage";
+    }
+
+    public static class SessionParams
+    {
+        public static String sessionUser = "sessionUser";
     }
 }

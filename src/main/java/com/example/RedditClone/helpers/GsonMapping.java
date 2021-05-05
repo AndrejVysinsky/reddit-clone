@@ -22,12 +22,4 @@ public class GsonMapping {
         String json = gson.toJson(paramsNew);
         return gson.fromJson(json, classType);
     }
-
-    /*public static <T> ArrayList<T> ResultSetToObject(ResultSet set, Class<T> classType)
-    {
-        Gson gson = new Gson();
-        String json = gson.toJson(set);
-
-        return gson.fromJson(json, (Type) classType);
-    }*/
 }

@@ -1,5 +1,7 @@
 package com.example.RedditClone.users;
 
+import com.example.RedditClone.helpers.Redirects;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -29,19 +31,19 @@ public class UserRegisterServlet extends HttpServlet {
             {
                 //add new user to db
                 userController.RegisterUser(user);
-                response.sendRedirect("/views/users/register.jsp?message=success");
+                response.sendRedirect(Redirects.UserRedirects.usersRegister + "?message=success");
             }
             else
             {
                 //password mismatch
-                response.sendRedirect("/views/users/register.jsp?message=passwordMismatch");
+                response.sendRedirect(Redirects.UserRedirects.usersRegister + "?message=passwordMismatch");
             }
 
         }
         else
         {
             //userName is already taken, show error
-            response.sendRedirect("/views/users/register.jsp?message=nameTaken");
+            response.sendRedirect(Redirects.UserRedirects.usersRegister + "?message=nameTaken");
         }
     }
 }

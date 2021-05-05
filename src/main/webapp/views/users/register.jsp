@@ -9,6 +9,7 @@
 
         <div class="my-div">
             <form action="${pageContext.request.contextPath}/user-register">
+                <h5>Registrácia</h5>
                 <div class="form-group">
                     <label class="font-weight-bold" for="<%=Parameters.UserParams.userName%>">Používateľské meno:</label>
                     <input class="form-control" type="text" name="<%=Parameters.UserParams.userName%>">
