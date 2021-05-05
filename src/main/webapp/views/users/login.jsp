@@ -1,4 +1,5 @@
 <%@ page import="com.example.RedditClone.helpers.Parameters" %>
+<%@ page import="com.example.RedditClone.helpers.Redirects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -7,20 +8,30 @@
     <body>
         <%@include file="../shared/navbar.jsp"%>
 
+        <%
+            User user = (User)session.getAttribute(Parameters.SessionParams.sessionUser);
+
+            if (user != null)
+            {
+                response.sendRedirect("profile.jsp");
+                return;
+            }
+        %>
+
         <div class="my-div">
             <form action="${pageContext.request.contextPath}/user-login">
-                <h5>Prihlásenie</h5>
+                <h5>Login with existing account</h5>
                 <div class="form-group">
-                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userName%>">Používateľské meno:</label>
+                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userName%>">User name:</label>
                     <input class="form-control" type="text" name="<%=Parameters.UserParams.userName%>">
                 </div>
 
                 <div class="form-group">
-                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userPassword%>">Heslo:</label>
+                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userPassword%>">Password:</label>
                     <input class="form-control" type="password" name="<%=Parameters.UserParams.userPassword%>">
                 </div>
 
-                <button formmethod="post" class="btn btn-primary">Prihlásiť sa</button>
+                <button formmethod="post" class="btn btn-primary">Login</button>
             </form>
         </div>
     </body>

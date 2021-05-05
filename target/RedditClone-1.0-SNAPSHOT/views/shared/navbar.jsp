@@ -21,12 +21,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="../posts/index.jsp">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../users/login.jsp">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="../users/register.jsp">Register</a>
-            </li>
+
 
             <%
                 User sessionUser = (User)session.getAttribute(Parameters.SessionParams.sessionUser);
@@ -35,6 +30,20 @@
             %>
                 <li class="nav-item">
                     <a class="nav-link" href="../users/profile.jsp"><%=sessionUser.getUserName()%></a>
+                </li>
+                <li>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user-logout">Logout</a>
+                </li>
+            <%
+                }
+                else
+                {
+            %>
+                <li class="nav-item">
+                    <a class="nav-link" href="../users/login.jsp">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../users/register.jsp">Register</a>
                 </li>
             <%
                 }

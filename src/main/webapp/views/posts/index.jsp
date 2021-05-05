@@ -15,11 +15,12 @@
         %>
 
         <form action="${pageContext.request.contextPath}/posts-create">
+            <h5>Create post</h5>
             <div class="form-group">
                 <input type="text" name="<%=Parameters.PostParams.postHeader%>" class="form-control">
             </div>
             <div class="form-group">
-                <input type="text" name="<%=Parameters.PostParams.postBody%>" class="form-control">
+                <textarea type="text" name="<%=Parameters.PostParams.postBody%>" class="form-control" rows="10"></textarea>
             </div>
             <div class="form-group">
                 <input type="hidden" name="<%=Parameters.UserParams.userId%>" class="form-control" value="<%=loggedInUser != null ? loggedInUser.getUserId() : 0%>">
