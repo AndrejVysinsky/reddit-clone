@@ -16,7 +16,7 @@
             }
         %>
 
-        <div class="my-div">
+        <div class="container">
             <h5>Profile</h5>
             <div class="form-group">
                 <label class="font-weight-bold" for="<%=Parameters.UserParams.userName%>">User name:</label>

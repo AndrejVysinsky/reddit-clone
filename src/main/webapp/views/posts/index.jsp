@@ -25,24 +25,26 @@
 
                 for (Post post : posts) {
             %>
-                <div class="row bg-dark rounded" style="padding: 10px; margin: 4px;">
-                    <div class="col-auto text-center">
+                <div class="row" style="margin: 4px;">
+                    <div class="col-auto bg-secondary rounded-left text-center" style="padding: 5px 15px 5px 15px">
                         <span class="align-middle fa fa-arrow-up text-white"></span><br>
                         <span class="align-middle text-white"><%=post.getPoints()%></span><br>
                         <span class="align-middle fa fa-arrow-down text-white"></span>
                     </div>
-                    <div class="col-8">
-                        <div class="row">
-                            <a class="font-weight-thin" style="color:dimgrey">
-                                Posted by u/<%=post.getAuthor().getUserName()%>
-                            </a>
-                        </div>
-                        <div class="row">
-                            <a class="text-white"><h4 class="text-left"><%=post.getHeader()%>
-                            </h4></a>
-                        </div>
-                        <div class="row text-left text-white">
-                            <%=post.getBody()%>
+                    <div class="col-8 bg-dark rounded-right">
+                        <div style="padding: 5px 5px 5px 10px">
+                            <div class="row">
+                                <a class="font-weight-thin" style="color:dimgrey">
+                                    Posted by u/<%=post.getAuthor().getUserName()%>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <a class="text-white"><h4 class="text-left"><%=post.getHeader()%>
+                                </h4></a>
+                            </div>
+                            <div class="row text-left text-white">
+                                <%=post.getBody()%>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
             }
         %>
 
-        <div class="my-div">
+        <div class="container">
             <form action="${pageContext.request.contextPath}/user-register">
                 <h5>Create new account</h5>
                 <div class="form-group">

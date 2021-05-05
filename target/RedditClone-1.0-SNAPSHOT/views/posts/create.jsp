@@ -9,7 +9,7 @@
     </head>
     <body>
         <%@include file="../shared/navbar.jsp"%>
-        <div class="my-div">
+        <div class="container">
             <%
                 if (sessionUser == null)
                 {
