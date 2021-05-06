@@ -29,6 +29,8 @@
                     <input class="form-control" type="password" name="<%=Parameters.UserParams.userPassword%>">
                 </div>
 
+                <%@include file="../shared/modelError.jsp"%>
+
                 <button formmethod="post" class="btn btn-primary">Login</button>
             </form>
         </div>

@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Date;
 
 @WebServlet(name = "PostsCreateServlet", value = "/posts-create")
 public class PostsCreateServlet extends HttpServlet {
@@ -28,6 +29,7 @@ public class PostsCreateServlet extends HttpServlet {
         if (post.getHeader() != null && post.getBody() != null && sessionUser != null)
         {
             post.setAuthor(sessionUser);
+            post.setCreateTime(System.currentTimeMillis());
             post = postsController.CreatePost(post);
 
             response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId());

@@ -8,6 +8,7 @@ public class Parameters
         public static String postHeader = "postHeader";
         public static String postBody = "postBody";
         public static String postPoints = "postPoints";
+        public static String createTime = "createTime";
     }
 
     public static class UserParams
@@ -17,6 +18,11 @@ public class Parameters
         public static String userPassword = "userPassword";
         public static String userPasswordConfirmation = "userPasswordConfirmation";
         public static String userImage = "userImage";
+    }
+
+    public static class PostVoteParams
+    {
+        public static String isUpvote = "isUpvote";
     }
 
     public static class SessionParams

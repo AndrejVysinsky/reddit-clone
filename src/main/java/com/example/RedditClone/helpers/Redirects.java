@@ -15,4 +15,9 @@ public class Redirects
         public static String userRegister = "views/users/register.jsp";
         public static String userProfile = "views/users/profile.jsp";
     }
+
+    public static class ModelRedirects
+    {
+        public static String modelError = "?modelError=";
+    }
 }

@@ -28,12 +28,12 @@ public class UserLoginServlet extends HttpServlet {
             //logged in, save user to session
             HttpSession session = request.getSession(true);
             session.setAttribute(Parameters.SessionParams.sessionUser, userDb);
-            response.sendRedirect(Redirects.UserRedirects.userLogin + "?message=success");
+            response.sendRedirect(Redirects.PostRedirects.postIndex);
         }
         else
         {
             //wrong password or user does not exist
-            response.sendRedirect(Redirects.UserRedirects.userLogin + "?message=failed");
+            response.sendRedirect(Redirects.UserRedirects.userLogin + Redirects.ModelRedirects.modelError + "Incorrect password or username does not exist.");
         }
     }
 }

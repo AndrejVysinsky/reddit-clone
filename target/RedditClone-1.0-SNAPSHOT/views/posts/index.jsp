@@ -27,15 +27,42 @@
             %>
                 <div class="row" style="margin: 4px;">
                     <div class="col-auto bg-secondary rounded-left text-center" style="padding: 5px 15px 5px 15px">
-                        <span class="align-middle fa fa-arrow-up text-white"></span><br>
-                        <span class="align-middle text-white"><%=post.getPoints()%></span><br>
-                        <span class="align-middle fa fa-arrow-down text-white"></span>
+                        <%
+                            if (sessionUser != null)
+                            {
+                        %>
+                            <form action="/post-vote">
+                                <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
+                                <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
+                                <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=true%>">
+                                <button class="btn align-middle fa fa-arrow-up text-white" formmethod="post"></button><br>
+                            </form>
+
+                            <span class="align-middle text-white"><%=post.getPoints()%></span><br>
+
+                            <form action="/post-vote">
+                                <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
+                                <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
+                                <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=false%>">
+                                <button class="btn align-middle fa fa-arrow-down text-white" formmethod="post"></button><br>
+                            </form>
+                        <%
+                            }
+                            else
+                            {
+                        %>
+                            <span class="align-middle fa fa-arrow-up text-white"></span><br>
+                            <span class="align-middle text-white"><%=post.getPoints()%></span><br>
+                            <span class="align-middle fa fa-arrow-down text-white"></span><br>
+                        <%
+                            }
+                        %>
                     </div>
                     <div class="col-8 bg-dark rounded-right">
                         <div style="padding: 5px 5px 5px 10px">
                             <div class="row">
                                 <a class="font-weight-thin" style="color:dimgrey">
-                                    Posted by u/<%=post.getAuthor().getUserName()%>
+                                    Posted by u/<%=post.getAuthor().getUserName()%>, <%=post.getTimePassedSinceCreation()%>
                                 </a>
                             </div>
                             <div class="row">

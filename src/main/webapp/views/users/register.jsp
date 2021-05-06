@@ -34,6 +34,8 @@
                     <input class="form-control" type="password" name="<%=Parameters.UserParams.userPasswordConfirmation%>">
                 </div>
 
+                <%@include file="../shared/modelError.jsp"%>
+
                 <button formmethod="post" class="btn btn-primary">Register</button>
             </form>
         </div>

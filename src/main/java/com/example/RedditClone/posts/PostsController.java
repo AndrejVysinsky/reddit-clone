@@ -3,6 +3,8 @@ package com.example.RedditClone.posts;
 import com.example.RedditClone.helpers.DatabaseConnectionManager;
 import com.example.RedditClone.helpers.ParameterMapping;
 import com.example.RedditClone.helpers.Parameters;
+import com.example.RedditClone.postVotes.PostVote;
+import com.example.RedditClone.postVotes.PostVoteController;
 import com.example.RedditClone.users.User;
 import com.example.RedditClone.users.UserController;
 
@@ -22,6 +24,7 @@ public class PostsController
     {
         String sql = "SELECT * FROM posts";
 
+
         try {
             Connection con = DatabaseConnectionManager.getDatabaseConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -29,6 +32,7 @@ public class PostsController
             ResultSet rs = ps.executeQuery();
 
             List<Post> posts = new ArrayList<>();
+            PostVoteController postVoteController = new PostVoteController();
             while (rs.next())
             {
                 Post post = new Post();
@@ -42,6 +46,20 @@ public class PostsController
                 post.setHeader(rs.getString(Parameters.PostParams.postHeader));
                 post.setBody(rs.getString(Parameters.PostParams.postBody));
                 post.setPoints(rs.getInt(Parameters.PostParams.postPoints));
+                post.setCreateTime(rs.getLong(Parameters.PostParams.createTime));
+
+                List<PostVote> postVotes = postVoteController.GetAllPostVotesForPost(post.getPostId());
+
+                int points = 0;
+                for (PostVote postVote : postVotes)
+                {
+                    if (postVote.isUpvote())
+                        points++;
+                    else
+                        points--;
+                }
+
+                post.setPoints(points);
 
                 posts.add(post);
             }
@@ -56,7 +74,7 @@ public class PostsController
 
     public Post CreatePost(Post post)
     {
-        String sql = "INSERT INTO posts(userId, header, body) values(?, ?, ?)";
+        String sql = "INSERT INTO posts(userId, postHeader, postBody, createTime) values(?, ?, ?, ?)";
 
         try {
             Connection con = DatabaseConnectionManager.getDatabaseConnection();
@@ -65,6 +83,7 @@ public class PostsController
             ps.setInt(1, post.getAuthor().getUserId());
             ps.setString(2, post.getHeader());
             ps.setString(3, post.getBody());
+            ps.setLong(4, post.getCreateTime());
 
             int success = ps.executeUpdate();
 

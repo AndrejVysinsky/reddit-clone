@@ -2,6 +2,8 @@ package com.example.RedditClone.posts;
 
 import com.example.RedditClone.users.User;
 
+import java.util.Date;
+
 public class Post
 {
     private Integer postId;
@@ -9,6 +11,7 @@ public class Post
     private String body;
     private User author;
     private int points;
+    private long createTime;
 
     public Post()
     {
@@ -60,5 +63,20 @@ public class Post
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getTimePassedSinceCreation()
+    {
+        Date date = new Date(createTime);
+
+        return date.toString();
     }
 }
