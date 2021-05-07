@@ -3,3 +3,18 @@
 {
     padding: 5px;
 }
+
+.myContainer
+{
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-top: 20px !important;
+}
+
+.postVote
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+}

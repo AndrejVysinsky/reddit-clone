@@ -11,7 +11,7 @@
     </head>
     <body>
         <%@include file="../shared/navbar.jsp"%>
-        <div class="container">
+        <div class="container myContainer">
 
             <%
                 PostsController postsController = new PostsController();
@@ -25,58 +25,63 @@
                 }
 
                 for (Post post : posts) {
+                    String postDetailsUrl = "details.jsp?postId=" + post.getPostId();
             %>
-                <div class="row" style="margin: 4px;">
-                    <div class="col-auto bg-secondary rounded-left text-center" style="padding: 5px 15px 5px 15px">
+                <div class="row justify-content-center">
+                    <div class="col-auto bg-secondary rounded-left text-center postVote">
                         <%
                             if (sessionUser != null)
                             {
                                 PostVote postVote = post.getUserPostVote(sessionUser.getUserId());
                         %>
-                            <form action="/post-vote">
-                                <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
-                                <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
-                                <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=true%>">
-                                <button class="btn align-middle fa fa-arrow-up
-                                        <%=postVote == null ? "text-white" : postVote.isUpvote() ? "text-warning" : "text-white"%>" formmethod="post">
-                                </button><br>
-                            </form>
+                            <a href="<%=postDetailsUrl%>" class="btn align-middle fa fa-arrow-up
+                                    <%=postVote == null ? "text-white" : postVote.isUpvote() ? "text-warning" : "text-white"%>" formmethod="post">
+                            </a>
+                            <br>
 
                             <span class="align-middle text-white"><%=post.getPoints()%></span><br>
 
-                            <form action="/post-vote">
-                                <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
-                                <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
-                                <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=false%>">
-                                <button class="btn align-middle fa fa-arrow-down
-                                        <%=postVote == null ? "text-white" : !postVote.isUpvote() ? "text-warning" : "text-white"%>" formmethod="post">
-                                </button><br>
-                            </form>
+                            <a href="<%=postDetailsUrl%>" class="btn align-middle fa fa-arrow-down
+                                    <%=postVote == null ? "text-white" : !postVote.isUpvote() ? "text-warning" : "text-white"%>" formmethod="post">
+                            </a>
                         <%
                             }
                             else
                             {
                         %>
-                            <span class="align-middle fa fa-arrow-up text-white"></span><br>
+                            <a href="<%=postDetailsUrl%>" class="btn align-middle fa fa-arrow-up text-white"></a><br>
                             <span class="align-middle text-white"><%=post.getPoints()%></span><br>
-                            <span class="align-middle fa fa-arrow-down text-white"></span><br>
+                            <a href="<%=postDetailsUrl%>" class="btn align-middle fa fa-arrow-down text-white"></a><br>
                         <%
                             }
                         %>
                     </div>
-                    <div class="col-8 bg-dark rounded-right">
+                    <div class="col-11 bg-dark rounded-right">
                         <div style="padding: 5px 5px 5px 10px">
                             <div class="row">
-                                <a class="font-weight-thin" style="color:dimgrey">
-                                    Posted by u/<%=post.getAuthor().getUserName()%>, <%=post.getTimePassedSinceCreation()%>
-                                </a>
+                                <span class="font-weight-thin" style="color:dimgrey">
+                                    Posted by
+                                <a class="font-weight-thin" style="color:dimgrey" href="index.jsp"><%=post.getAuthor().getUserName()%></a>, <%=post.getTimePassedSinceCreation()%>
+                                </span>
                             </div>
                             <div class="row">
-                                <a class="text-white"><h4 class="text-left"><%=post.getHeader()%>
+                                <a class="text-white" href="<%=postDetailsUrl%>"><h4 class="text-left"><%=post.getHeader()%>
                                 </h4></a>
                             </div>
                             <div class="row text-left text-white">
-                                <%=post.getBody()%>
+                                <%
+                                    String postBody = post.getBody();
+
+                                    if (postBody.length() > 30)
+                                    {
+                                        postBody = postBody.substring(0, 30) + "...";
+                                    }
+                                %>
+                                <%=postBody%>
+                            </div>
+                            <br>
+                            <div class="row font-weight-thin" style="color:dimgrey">
+                                <span class="fa fa-comments align-middle"> <%=post.getCommentCount()%> <%=post.getCommentCount() == 1 ? "Comment" : "Comments"%></span>
                             </div>
                         </div>
                     </div>

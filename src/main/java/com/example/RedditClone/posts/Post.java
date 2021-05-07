@@ -1,5 +1,6 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.comments.Comment;
 import com.example.RedditClone.postVotes.PostVote;
 import com.example.RedditClone.users.User;
 
@@ -16,6 +17,7 @@ public class Post
     private long createTime;
 
     private ArrayList<PostVote> postVotes;
+    private ArrayList<Comment> comments;
 
     public Post()
     {
@@ -100,5 +102,13 @@ public class Post
                 return postVote;
         }
         return null;
+    }
+
+    public int getCommentCount()
+    {
+        if (comments == null)
+            return 0;
+
+        return comments.size();
     }
 }

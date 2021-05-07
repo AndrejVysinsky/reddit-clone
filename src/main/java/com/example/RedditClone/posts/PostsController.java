@@ -109,6 +109,57 @@ public class PostsController
         return null;
     }
 
+    public Post GetPostById(Integer postId)
+    {
+        String sql = "SELECT * FROM posts WHERE postId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, postId);
+
+            ResultSet rs = ps.executeQuery();
+
+            PostVoteController postVoteController = new PostVoteController();
+            if (rs.next())
+            {
+                Post post = new Post();
+
+                UserController userController = new UserController();
+                User user = userController.GetUserById(rs.getInt(Parameters.UserParams.userId));
+
+                post.setAuthor(user);
+
+                post.setPostId(rs.getInt(Parameters.PostParams.postId));
+                post.setHeader(rs.getString(Parameters.PostParams.postHeader));
+                post.setBody(rs.getString(Parameters.PostParams.postBody));
+                post.setPoints(rs.getInt(Parameters.PostParams.postPoints));
+                post.setCreateTime(rs.getLong(Parameters.PostParams.createTime));
+
+                List<PostVote> postVotes = postVoteController.GetAllPostVotesForPost(post.getPostId());
+
+                int points = 0;
+                for (PostVote postVote : postVotes)
+                {
+                    if (postVote.isUpvote())
+                        points++;
+                    else
+                        points--;
+                }
+
+                post.setPoints(points);
+                post.setPostVotes((ArrayList<PostVote>) postVotes);
+
+                return post;
+            }
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public Post MapParamsToPost(Map<String, String[]> params)
     {
         HashMap<String, String> trimmedParams = ParameterMapping.trimParamMap(params);

@@ -46,6 +46,6 @@ public class PostVoteServlet extends HttpServlet {
         {
             //wrong parameters
         }
-        response.sendRedirect(Redirects.PostRedirects.postIndex);
+        response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + postVote.getPostId());
     }
 }

@@ -1,12 +1,12 @@
 package com.example.RedditClone.comments;
 
-import com.example.RedditClone.posts.Post;
 import com.example.RedditClone.users.User;
 
 public class Comment
 {
-    private String body;
+    private Integer commentId;
+    private Integer postId;
+    private String commentText;
     private User author;
-    private Post post;
     private int points;
 }

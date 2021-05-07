@@ -25,6 +25,11 @@ public class Parameters
         public static String isUpvote = "isUpvote";
     }
 
+    public static class CommentParams
+    {
+        public static String commentText = "commentText";
+    }
+
     public static class SessionParams
     {
         public static String sessionUser = "sessionUser";
