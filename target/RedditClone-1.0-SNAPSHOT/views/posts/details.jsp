@@ -80,7 +80,7 @@
                                 </h4>
                             </div>
                             <div class="row text-left">
-                                <%=post.getBody()%>
+                                <%=post.getBody().replaceAll("(\r\n|\n)", "<br />")%>
                             </div>
                             <br>
                             <div class="row font-weight-thin" style="color:dimgrey">
