@@ -5,8 +5,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "PostsEditServlet", value = "/PostsEditServlet")
-public class PostsEditServlet extends HttpServlet {
+@WebServlet(name = "PostDeleteServlet", value = "/post-delete")
+public class PostDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

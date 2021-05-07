@@ -1,4 +1,4 @@
-<%@ page import="com.example.RedditClone.posts.PostsController" %>
+<%@ page import="com.example.RedditClone.posts.PostController" %>
 <%@ page import="com.example.RedditClone.helpers.Parameters" %>
 <%@ page import="com.example.RedditClone.posts.Post" %>
 <%@ page import="java.util.ArrayList" %>
@@ -14,8 +14,8 @@
         <div class="container myContainer">
 
             <%
-                PostsController postsController = new PostsController();
-                ArrayList<Post> posts = (ArrayList<Post>)postsController.GetAllPosts();
+                PostController postController = new PostController();
+                ArrayList<Post> posts = (ArrayList<Post>) postController.GetAllPosts();
 
                 if (sessionUser != null)
                 {

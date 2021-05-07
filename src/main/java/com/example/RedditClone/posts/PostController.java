@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostsController
+public class PostController
 {
     public List<Post> GetAllPosts()
     {
@@ -109,6 +109,28 @@ public class PostsController
         return null;
     }
 
+    public int UpdatePost(Post post)
+    {
+        String sql = "UPDATE posts SET postHeader = ?, postBody = ? WHERE postId = ? AND userId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, post.getHeader());
+            ps.setString(2, post.getBody());
+            ps.setInt(3, post.getPostId());
+            ps.setInt(4, post.getAuthor().getUserId());
+
+            return ps.executeUpdate();
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public Post GetPostById(Integer postId)
     {
         String sql = "SELECT * FROM posts WHERE postId = ?";
@@ -165,6 +187,11 @@ public class PostsController
         HashMap<String, String> trimmedParams = ParameterMapping.trimParamMap(params);
 
         Post post = new Post();
+
+        if (trimmedParams.containsKey(Parameters.PostParams.postId))
+        {
+            post.setPostId(Integer.parseInt(trimmedParams.get(Parameters.PostParams.postId)));
+        }
 
         post.setHeader(trimmedParams.get(Parameters.PostParams.postHeader));
         post.setBody(trimmedParams.get(Parameters.PostParams.postBody));

@@ -1,8 +1,9 @@
-<%@ page import="com.example.RedditClone.posts.PostsController" %>
+<%@ page import="com.example.RedditClone.posts.PostController" %>
 <%@ page import="com.example.RedditClone.users.User" %>
 <%@ page import="com.example.RedditClone.helpers.Parameters" %>
 <%@ page import="com.example.RedditClone.postVotes.PostVote" %>
 <%@ page import="com.example.RedditClone.posts.Post" %>
+<%@ page import="com.example.RedditClone.posts.PostController" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -23,8 +24,8 @@
                                 postId = Integer.parseInt(postIdParam);
                             }
 
-                            PostsController postsController = new PostsController();
-                            Post post = postsController.GetPostById(postId);
+                            PostController postController = new PostController();
+                            Post post = postController.GetPostById(postId);
 
                             if (post == null)
                             {
@@ -84,6 +85,15 @@
                             <br>
                             <div class="row font-weight-thin" style="color:dimgrey">
                                 <span class="fa fa-comments align-middle"> <%=post.getCommentCount()%> <%=post.getCommentCount() == 1 ? "Comment" : "Comments"%></span>
+                                <%
+                                    if (sessionUser != null && sessionUser.getUserId().equals(post.getAuthor().getUserId()))
+                                    {
+                                %>
+                                    <a href="edit.jsp?postId=<%=post.getPostId()%>" class="fa fa-edit" style="color: dimgrey; margin-left: 10px"></a>
+                                <%
+                                    }
+                                %>
+
                             </div>
                         </div>
 
@@ -94,8 +104,8 @@
                             %>
                             <div class="border rounded col-12 text-center" style="padding: 10px">
                                 <span>Log in or register to leave a comment</span>
-                                <a class="btn btn-primary" href="../users/login.jsp">Login</a>
-                                <a class="btn btn-primary" href="../users/register.jsp">Register</a>
+                                <a class="btn btn-primary btn-sm" href="../users/login.jsp">Login</a>
+                                <a class="btn btn-primary btn-sm" href="../users/register.jsp">Register</a>
                             </div>
                             <%
                             }
