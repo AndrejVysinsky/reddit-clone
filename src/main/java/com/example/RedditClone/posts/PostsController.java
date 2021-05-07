@@ -60,6 +60,7 @@ public class PostsController
                 }
 
                 post.setPoints(points);
+                post.setPostVotes((ArrayList<PostVote>) postVotes);
 
                 posts.add(post);
             }

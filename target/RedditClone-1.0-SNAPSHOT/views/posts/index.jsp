@@ -2,6 +2,7 @@
 <%@ page import="com.example.RedditClone.helpers.Parameters" %>
 <%@ page import="com.example.RedditClone.posts.Post" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.RedditClone.postVotes.PostVote" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -30,12 +31,15 @@
                         <%
                             if (sessionUser != null)
                             {
+                                PostVote postVote = post.getUserPostVote(sessionUser.getUserId());
                         %>
                             <form action="/post-vote">
                                 <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
                                 <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
                                 <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=true%>">
-                                <button class="btn align-middle fa fa-arrow-up text-white" formmethod="post"></button><br>
+                                <button class="btn align-middle fa fa-arrow-up
+                                        <%=postVote == null ? "text-white" : postVote.isUpvote() ? "text-warning" : "text-white"%>" formmethod="post">
+                                </button><br>
                             </form>
 
                             <span class="align-middle text-white"><%=post.getPoints()%></span><br>
@@ -44,7 +48,9 @@
                                 <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
                                 <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
                                 <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=false%>">
-                                <button class="btn align-middle fa fa-arrow-down text-white" formmethod="post"></button><br>
+                                <button class="btn align-middle fa fa-arrow-down
+                                        <%=postVote == null ? "text-white" : !postVote.isUpvote() ? "text-warning" : "text-white"%>" formmethod="post">
+                                </button><br>
                             </form>
                         <%
                             }

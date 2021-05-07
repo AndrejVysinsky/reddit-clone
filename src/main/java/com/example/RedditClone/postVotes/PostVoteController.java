@@ -121,6 +121,26 @@ public class PostVoteController
         return 0;
     }
 
+    public int DeletePostVote(PostVote postVote)
+    {
+        String sql = "DELETE FROM postVotes WHERE postId = ? AND userId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, postVote.getPostId());
+            ps.setInt(2, postVote.getUserId());
+
+            return ps.executeUpdate();
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public PostVote MapParamsToPost(Map<String, String[]> params)
     {
         HashMap<String, String> trimmedParams = ParameterMapping.trimParamMap(params);

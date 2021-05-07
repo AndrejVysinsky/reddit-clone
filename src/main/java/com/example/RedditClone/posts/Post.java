@@ -1,7 +1,9 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.postVotes.PostVote;
 import com.example.RedditClone.users.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Post
@@ -12,6 +14,8 @@ public class Post
     private User author;
     private int points;
     private long createTime;
+
+    private ArrayList<PostVote> postVotes;
 
     public Post()
     {
@@ -78,5 +82,23 @@ public class Post
         Date date = new Date(createTime);
 
         return date.toString();
+    }
+
+    public ArrayList<PostVote> getPostVotes() {
+        return postVotes;
+    }
+
+    public void setPostVotes(ArrayList<PostVote> postVotes) {
+        this.postVotes = postVotes;
+    }
+
+    public PostVote getUserPostVote(Integer userId)
+    {
+        for (PostVote postVote : postVotes)
+        {
+            if (postVote.getUserId() == userId)
+                return postVote;
+        }
+        return null;
     }
 }
