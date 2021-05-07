@@ -25,9 +25,17 @@ public class Parameters
         public static String isUpvote = "isUpvote";
     }
 
+    public static class CommentVoteParams
+    {
+        public static String isUpvote = "isUpvote";
+    }
+
     public static class CommentParams
     {
+        public static String commentId = "commentId";
         public static String commentText = "commentText";
+        public static String commentPoints = "commentPoints";
+        public static String createTime = "createTime";
     }
 
     public static class SessionParams

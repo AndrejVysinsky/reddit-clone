@@ -1,5 +1,7 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.comments.Comment;
+import com.example.RedditClone.comments.CommentController;
 import com.example.RedditClone.helpers.DatabaseConnectionManager;
 import com.example.RedditClone.helpers.ParameterMapping;
 import com.example.RedditClone.helpers.Parameters;
@@ -23,7 +25,6 @@ public class PostController
     public List<Post> GetAllPosts()
     {
         String sql = "SELECT * FROM posts";
-
 
         try {
             Connection con = DatabaseConnectionManager.getDatabaseConnection();
@@ -61,6 +62,10 @@ public class PostController
 
                 post.setPoints(points);
                 post.setPostVotes((ArrayList<PostVote>) postVotes);
+
+                CommentController commentController = new CommentController();
+                List<Comment> comments = commentController.GetCommentsForPost(post.getPostId());
+                post.setComments((ArrayList<Comment>) comments);
 
                 posts.add(post);
             }
@@ -172,6 +177,10 @@ public class PostController
 
                 post.setPoints(points);
                 post.setPostVotes((ArrayList<PostVote>) postVotes);
+
+                CommentController commentController = new CommentController();
+                List<Comment> comments = commentController.GetCommentsForPost(postId);
+                post.setComments((ArrayList<Comment>) comments);
 
                 return post;
             }

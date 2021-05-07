@@ -4,6 +4,8 @@
 <%@ page import="com.example.RedditClone.postVotes.PostVote" %>
 <%@ page import="com.example.RedditClone.posts.Post" %>
 <%@ page import="com.example.RedditClone.posts.PostController" %>
+<%@ page import="com.example.RedditClone.comments.Comment" %>
+<%@ page import="com.example.RedditClone.commentVotes.CommentVote" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -113,6 +115,7 @@
                             {
                             %>
                             <form action="${pageContext.request.contextPath}/comment-create" class="col-12" style="padding: 0px">
+                                <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
                                 <textarea name="<%=Parameters.CommentParams.commentText%>" class="form-control" cols="30" rows="5" style="margin-bottom: 5px"></textarea>
                                 <button class="btn btn-primary btn-sm" formmethod="post">Add comment</button>
                             </form>
@@ -124,24 +127,69 @@
                 </div>
                 <hr>
                 <div class="container" style="padding-left: 40px">
-                    <div class="row">
-                        <div class="col-auto">
-                            <img src="https://www.redditstatic.com/avatars/avatar_default_12_0079D3.png" alt="" width="20px">
-                        </div>
-                        <div class="col-auto">
+                    <%
+                        if (post.getComments() != null)
+                        {
+                            for (Comment comment : post.getComments())
+                            {
+                        %>
                             <div class="row">
-                                <a class="font-weight-thin" style="color:dimgrey" href="index.jsp"><%=post.getAuthor().getUserName()%></a>, <%=post.getTimePassedSinceCreation()%>
+                                <div class="col-auto">
+                                    <img src="https://www.redditstatic.com/avatars/avatar_default_12_0079D3.png" alt="" width="20px">
+                                </div>
+                                <div class="col-auto">
+                                    <div class="row">
+                                        <a class="font-weight-thin" style="color:dimgrey" href="index.jsp"><%=comment.getAuthor().getUserName()%></a>, <%=comment.getTimePassedSinceCreation()%>
+                                    </div>
+                                    <div class="row">
+                                        <span><%=comment.getCommentText().replaceAll("(\r\n|\n)", "<br />")%></span>
+                                    </div>
+                                    <div class="row">
+                                        <%
+                                            if (sessionUser != null)
+                                            {
+                                                CommentVote commentVote = comment.GetUserCommentVote(sessionUser.getUserId());
+                                        %>
+                                        <form action="/comment-vote">
+                                            <input type="hidden" name="<%=Parameters.CommentParams.commentId%>" value="<%=comment.getCommentId()%>">
+                                            <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
+                                            <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=true%>">
+                                            <button class="btn align-middle fa fa-arrow-up
+                                                    <%=commentVote == null ? "text-dark" : commentVote.isUpvote() ? "text-warning" : "text-dark"%>" formmethod="post"
+                                                    style="padding: 0">
+                                            </button><br>
+                                        </form>
+
+                                        <span class="align-middle text-dark" style="padding: 0px 10px 0px 10px"><%=comment.getPoints()%></span><br>
+
+                                        <form action="/comment-vote">
+                                            <input type="hidden" name="<%=Parameters.CommentParams.commentId%>" value="<%=comment.getCommentId()%>">
+                                            <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
+                                            <input type="hidden" name="<%=Parameters.PostVoteParams.isUpvote%>" value="<%=false%>">
+                                            <button class="btn align-middle fa fa-arrow-down
+                                                    <%=commentVote == null ? "text-dark" : !commentVote.isUpvote() ? "text-warning" : "text-dark"%>" formmethod="post"
+                                                    style="padding: 0">
+                                            </button><br>
+                                        </form>
+                                        <%
+                                            }
+                                        else
+                                            {
+                                        %>
+                                        <button class="btn align-middle fa fa-arrow-up text-dark" style="padding: 0"></button><br>
+                                        <span class="align-middle text-dark" style="padding: 0px 10px 0px 10px"><%=comment.getPoints()%></span><br>
+                                        <button class="btn align-middle fa fa-arrow-down text-dark" style="padding: 0"></button><br>
+                                        <%
+                                            }
+                                        %>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
-                                <span>My chicken army is going to look so sick now...</span>
-                            </div>
-                            <div class="row">
-                                <a class="btn align-middle fa fa-arrow-up text-dark" style="padding: 5px 10px 5px 0px"></a>
-                                <span class="align-middle text-dark"><%=post.getPoints()%></span>
-                                <a class="btn align-middle fa fa-arrow-down text-dark" style="padding: 5px 10px 5px 10px"></a>
-                            </div>
-                        </div>
-                    </div>
+                            <br>
+                        <%
+                            }
+                        }
+                    %>
                 </div>
                 <br>
             </div>
