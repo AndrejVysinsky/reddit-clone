@@ -57,7 +57,7 @@
                         %>
                     </div>
                     <div class="col-11 bg-dark rounded-right">
-                        <div style="padding: 5px 5px 5px 10px">
+                        <div style="padding: 10px 5px 5px 10px">
                             <div class="row">
                                 <span class="font-weight-thin" style="color:dimgrey">
                                     Posted by
@@ -80,7 +80,7 @@
                                 <%=postBody%>
                             </div>
                             <br>
-                            <div class="row font-weight-thin" style="color:dimgrey">
+                            <div class="row font-weight-thin" style="color:dimgrey; padding-bottom: 5px">
                                 <span class="fa fa-comments align-middle"> <%=post.getCommentCount()%> <%=post.getCommentCount() == 1 ? "Comment" : "Comments"%></span>
                             </div>
                         </div>

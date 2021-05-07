@@ -67,7 +67,7 @@
                         %>
                     </div>
                     <div class="col-11 bg-white">
-                        <div style="padding: 5px 5px 5px 10px">
+                        <div style="padding: 10px 5px 5px 5px">
                             <div class="row">
                                             <span class="font-weight-thin" style="color:dimgrey">
                                                 Posted by
@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-center" style="margin-top:10px; margin-left:3px;margin-right:3px; margin-bottom:10px">
+                        <div class="row justify-content-center" style="margin-top:10px; margin-bottom:10px">
                             <%
                                 if (sessionUser == null)
                                 {
@@ -104,7 +104,7 @@
                             %>
                             <form action="${pageContext.request.contextPath}/comment-create" class="col-12" style="padding: 0px">
                                 <textarea name="<%=Parameters.CommentParams.commentText%>" class="form-control" cols="30" rows="5" style="margin-bottom: 5px"></textarea>
-                                <button class="btn btn-primary" formmethod="post">Add</button>
+                                <button class="btn btn-primary btn-sm" formmethod="post">Add comment</button>
                             </form>
                             <%
                                 }
@@ -125,15 +125,15 @@
                             <div class="row">
                                 <span>My chicken army is going to look so sick now...</span>
                             </div>
-
+                            <div class="row">
+                                <a class="btn align-middle fa fa-arrow-up text-dark" style="padding: 5px 10px 5px 0px"></a>
+                                <span class="align-middle text-dark"><%=post.getPoints()%></span>
+                                <a class="btn align-middle fa fa-arrow-down text-dark" style="padding: 5px 10px 5px 10px"></a>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <a class="btn align-middle fa fa-arrow-up text-white"></a>
-                        <span class="align-middle text-white"><%=post.getPoints()%></span>
-                        <a class="btn align-middle fa fa-arrow-down text-white"></a>
-                    </div>
                 </div>
+                <br>
             </div>
         </div>
     </body>
