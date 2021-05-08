@@ -13,21 +13,31 @@
         <%@include file="../shared/navbar.jsp"%>
         <div class="container myContainer">
 
+            <div class="row justify-content-start" style="margin-bottom: 20px">
+                <div class="col-auto bg-dark rounded" style="padding: 15px">
+                    <a class="btn myColor2 text-white fa fa-star" href="index.jsp?sort=new" style="margin-left: 15px;"> New</a>
+                    <a class="btn myColor2 text-white fa fa-trophy" href="index.jsp?sort=top" style="margin-left: 20px; margin-right: 20px"> Top</a>
+                    <%
+                        if (sessionUser != null)
+                        {
+                    %>
+                        <a class="btn myColor2 text-white fa fa-plus" href="create.jsp" style="margin-right: 15px"> Add post</a>
+                    <%
+                        }
+                    %>
+                </div>
+            </div>
+
             <%
                 PostController postController = new PostController();
                 ArrayList<Post> posts = (ArrayList<Post>) postController.GetAllPosts();
 
-                if (sessionUser != null)
-                {
-            %>
-                <a class="btn btn-primary" href="create.jsp">Add post</a>
-            <%
-                }
+
 
                 for (Post post : posts) {
                     String postDetailsUrl = "details.jsp?postId=" + post.getPostId();
             %>
-                <div class="row justify-content-center">
+                <div class="row justify-content-start">
                     <div class="col-auto myColor2 rounded-left text-center postVote">
                         <%
                             if (sessionUser != null)
