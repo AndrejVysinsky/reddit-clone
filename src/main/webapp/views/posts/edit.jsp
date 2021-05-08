@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Post - create</title>
+        <title>Post - edit</title>
     </head>
     <body>
         <%@include file="../shared/navbar.jsp"%>
@@ -36,7 +36,7 @@
             %>
 
             <form action="${pageContext.request.contextPath}/post-edit">
-                <h5>Create post</h5>
+                <h5>Edit post</h5>
                 <div class="form-group">
                     <input type="text" name="<%=Parameters.PostParams.postHeader%>" class="form-control" value="<%=post.getHeader()%>">
                 </div>

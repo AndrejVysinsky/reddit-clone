@@ -1,6 +1,7 @@
 package com.example.RedditClone.comments;
 
 import com.example.RedditClone.commentVotes.CommentVote;
+import com.example.RedditClone.helpers.DateFormatter;
 import com.example.RedditClone.postVotes.PostVote;
 import com.example.RedditClone.users.User;
 
@@ -72,7 +73,7 @@ public class Comment
     {
         Date date = new Date(createTime);
 
-        return date.toString();
+        return DateFormatter.GetTimeSinceCreation(date);
     }
 
     public ArrayList<CommentVote> getCommentVotes() {

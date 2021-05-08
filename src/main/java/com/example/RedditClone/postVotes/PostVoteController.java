@@ -141,6 +141,25 @@ public class PostVoteController
         return 0;
     }
 
+    public int DeletePostVotesForPost(Integer postId)
+    {
+        String sql = "DELETE FROM postVotes WHERE postId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, postId);
+
+            return ps.executeUpdate();
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public PostVote MapParamsToPost(Map<String, String[]> params)
     {
         HashMap<String, String> trimmedParams = ParameterMapping.trimParamMap(params);

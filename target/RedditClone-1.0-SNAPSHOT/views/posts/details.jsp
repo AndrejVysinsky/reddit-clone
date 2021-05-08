@@ -86,12 +86,17 @@
                             </div>
                             <br>
                             <div class="row font-weight-thin" style="color:dimgrey">
-                                <span class="fa fa-comments align-middle"> <%=post.getCommentCount()%> <%=post.getCommentCount() == 1 ? "Comment" : "Comments"%></span>
+                                <span class="fa fa-comments align-middle" style="padding: 5px"> <%=post.getCommentCount()%> <%=post.getCommentCount() == 1 ? "Comment" : "Comments"%></span>
                                 <%
                                     if (sessionUser != null && sessionUser.getUserId().equals(post.getAuthor().getUserId()))
                                     {
                                 %>
-                                    <a href="edit.jsp?postId=<%=post.getPostId()%>" class="fa fa-edit" style="color: dimgrey; margin-left: 10px"></a>
+                                    <a href="edit.jsp?postId=<%=post.getPostId()%>" class="btn fa fa-pencil" style="color: dimgrey; margin-left: 5px; padding: 5px;"></a>
+                                    <form action="/post-delete">
+                                        <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
+                                        <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
+                                        <button class="btn fa fa-times text-danger" onclick="return confirm('Are you sure that you want to delete your post?')" formmethod="post" style="padding: 0px; margin-left: 5px"></button>
+                                    </form>
                                 <%
                                     }
                                 %>
@@ -137,9 +142,22 @@
                                 <div class="col-auto">
                                     <img src="https://www.redditstatic.com/avatars/avatar_default_12_0079D3.png" alt="" width="20px">
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-11">
                                     <div class="row">
                                         <a class="font-weight-thin" style="color:dimgrey" href="index.jsp"><%=comment.getAuthor().getUserName()%></a>, <%=comment.getTimePassedSinceCreation()%>
+                                        <%
+                                            if (sessionUser != null && sessionUser.getUserId() == comment.getAuthor().getUserId())
+                                            {
+                                        %>
+                                            <form action="/comment-delete">
+                                                <input type="hidden" name="<%=Parameters.CommentParams.commentId%>" value="<%=comment.getCommentId()%>">
+                                                <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=comment.getPostId()%>">
+                                                <input type="hidden" name="<%=Parameters.UserParams.userId%>" value="<%=sessionUser.getUserId()%>">
+                                                <button class="btn fa fa-times text-danger" onclick="return confirm('Are you sure that you want to delete your comment?')" formmethod="post" style="padding: 0px; margin-left: 5px"></button>
+                                            </form>
+                                        <%
+                                            }
+                                        %>
                                     </div>
                                     <div class="row">
                                         <span><%=comment.getCommentText().replaceAll("(\r\n|\n)", "<br />")%></span>

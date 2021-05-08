@@ -1,5 +1,6 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.commentVotes.CommentVoteController;
 import com.example.RedditClone.comments.Comment;
 import com.example.RedditClone.comments.CommentController;
 import com.example.RedditClone.helpers.DatabaseConnectionManager;
@@ -128,6 +129,39 @@ public class PostController
             ps.setInt(4, post.getAuthor().getUserId());
 
             return ps.executeUpdate();
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public int DeletePost(Post post)
+    {
+        String sql = "DELETE FROM posts WHERE postId = ?";
+
+        //delete post, postVotes, comments and commentVotes
+
+        //delete postVotes
+        PostVoteController postVoteController = new PostVoteController();
+        int deleted = postVoteController.DeletePostVotesForPost(post.getPostId());
+
+        //delete comments
+        CommentController commentController = new CommentController();
+
+        for (Comment comment : post.getComments())
+        {
+            deleted += commentController.DeleteComment(comment);
+        }
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, post.getPostId());
+
+            return ps.executeUpdate() + deleted;
 
         } catch (NamingException | SQLException e) {
             e.printStackTrace();

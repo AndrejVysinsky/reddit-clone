@@ -1,6 +1,8 @@
-package com.example.RedditClone.posts;
+package com.example.RedditClone.comments;
 
 import com.example.RedditClone.helpers.Redirects;
+import com.example.RedditClone.posts.Post;
+import com.example.RedditClone.posts.PostController;
 import com.example.RedditClone.users.User;
 import com.example.RedditClone.users.UserController;
 
@@ -9,8 +11,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "PostDeleteServlet", value = "/post-delete")
-public class PostDeleteServlet extends HttpServlet {
+@WebServlet(name = "CommentDeleteServlet", value = "/comment-delete")
+public class CommentDeleteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,16 +24,16 @@ public class PostDeleteServlet extends HttpServlet {
         UserController userController = new UserController();
         User sessionUser = userController.GetLoggedInUser(request);
 
-        PostController postController = new PostController();
-        Post post = postController.MapParamsToPost(request.getParameterMap());
+        CommentController commentController = new CommentController();
+        Comment comment = commentController.MapParamsToComment(request.getParameterMap());
 
-        if (post.getPostId() != null && sessionUser != null)
+        if (comment.getPostId() != null && sessionUser != null)
         {
-            Post postDb = postController.GetPostById(post.getPostId());
+            Comment commentDb = commentController.GetCommentById(comment.getCommentId());
 
-            if (sessionUser.getUserId().equals(postDb.getAuthor().getUserId()))
+            if (sessionUser.getUserId().equals(commentDb.getAuthor().getUserId()))
             {
-                int result = postController.DeletePost(postDb);
+                int result = commentController.DeleteComment(commentDb);
 
                 if (result > 0)
                 {

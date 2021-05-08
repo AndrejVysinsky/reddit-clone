@@ -149,11 +149,39 @@ public class CommentController
         return 0;
     }
 
+    public int DeleteComment(Comment comment)
+    {
+        String sql = "DELETE FROM comments WHERE commentId = ?";
+
+        //delete commentVotes
+        CommentVoteController commentVoteController = new CommentVoteController();
+        int deleted = commentVoteController.DeleteCommentVotesForComment(comment.getCommentId());
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, comment.getCommentId());
+
+            return ps.executeUpdate() + deleted;
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public Comment MapParamsToComment(Map<String, String[]> params)
     {
         HashMap<String, String> trimmedParams = ParameterMapping.trimParamMap(params);
 
         Comment comment = new Comment();
+
+        if (trimmedParams.containsKey(Parameters.CommentParams.commentId))
+        {
+            comment.setCommentId(Integer.parseInt(trimmedParams.get(Parameters.CommentParams.commentId)));
+        }
 
         comment.setPostId(Integer.parseInt(trimmedParams.get(Parameters.PostParams.postId)));
         comment.setCommentText(trimmedParams.get(Parameters.CommentParams.commentText));

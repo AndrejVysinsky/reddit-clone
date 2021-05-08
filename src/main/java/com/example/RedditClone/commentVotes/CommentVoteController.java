@@ -141,6 +141,25 @@ public class CommentVoteController
         return 0;
     }
 
+    public int DeleteCommentVotesForComment(Integer commentId)
+    {
+        String sql = "DELETE FROM commentVotes WHERE commentId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, commentId);
+
+            return ps.executeUpdate();
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     public CommentVote MapParamsToPost(Map<String, String[]> params)
     {
         HashMap<String, String> trimmedParams = ParameterMapping.trimParamMap(params);
