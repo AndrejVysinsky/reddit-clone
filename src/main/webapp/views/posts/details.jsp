@@ -12,10 +12,10 @@
     <head>
         <title>Post - create</title>
     </head>
-    <body class="bg-dark">
+    <body>
         <%@include file="../shared/navbar.jsp"%>
-        <div class="container myContainer bg-dark">
-            <div class="bg-white rounded">
+        <div class="container myColor2" style="padding-top: 20px; padding-bottom: 20px;">
+            <div class="bg-white rounded col-11 justify-content-center" style="margin: auto">
                 <div class="row justify-content-center">
                     <div class="col-auto text-center postVote">
                         <%
@@ -69,7 +69,7 @@
                             }
                         %>
                     </div>
-                    <div class="col-11 bg-white">
+                    <div class="col-11">
                         <div style="padding: 10px 5px 5px 5px">
                             <div class="row">
                                             <span class="font-weight-thin" style="color:dimgrey">
@@ -104,7 +104,7 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-center" style="margin-top:10px; margin-bottom:10px">
+                        <div class="row justify-content-start" style="margin-top:10px; margin-bottom:10px">
                             <%
                                 if (sessionUser == null)
                                 {
@@ -119,7 +119,7 @@
                             else
                             {
                             %>
-                            <form action="${pageContext.request.contextPath}/comment-create" class="col-12" style="padding: 0px">
+                            <form action="${pageContext.request.contextPath}/comment-create" class="col-11" style="padding: 0px">
                                 <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
                                 <textarea name="<%=Parameters.CommentParams.commentText%>" class="form-control" cols="30" rows="5" style="margin-bottom: 5px"></textarea>
                                 <button class="btn btn-primary btn-sm" formmethod="post">Add comment</button>

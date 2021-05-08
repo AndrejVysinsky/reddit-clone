@@ -18,3 +18,13 @@
     padding-left: 7px;
     padding-right: 7px;
 }
+
+body
+{
+    background-color: grey;
+}
+
+.myColor2
+{
+    background-color: steelblue;
+}

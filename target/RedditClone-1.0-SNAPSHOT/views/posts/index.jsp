@@ -28,7 +28,7 @@
                     String postDetailsUrl = "details.jsp?postId=" + post.getPostId();
             %>
                 <div class="row justify-content-center">
-                    <div class="col-auto bg-secondary rounded-left text-center postVote">
+                    <div class="col-auto myColor2 rounded-left text-center postVote">
                         <%
                             if (sessionUser != null)
                             {
