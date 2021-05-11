@@ -30,9 +30,30 @@
 
             <%
                 PostController postController = new PostController();
-                ArrayList<Post> posts = (ArrayList<Post>) postController.GetAllPosts();
 
+                ArrayList<Post> posts = new ArrayList<>();
+                if (request.getParameter("user") != null)
+                {
+                    posts = (ArrayList<Post>) postController.GetUserPosts(request.getParameter("user"));
+                }
+                else
+                {
+                    posts = (ArrayList<Post>) postController.GetAllPosts();
 
+                    if (request.getParameter("sort") != null)
+                    {
+                        String sortBy = request.getParameter("sort");
+
+                        if (sortBy.equals("new"))
+                        {
+                            posts = (ArrayList<Post>) postController.SortPostsByDate(posts);
+                        }
+                        else if (sortBy.equals("top"))
+                        {
+                            posts = (ArrayList<Post>) postController.SortPostsByVotes(posts);
+                        }
+                    }
+                }
 
                 for (Post post : posts) {
                     String postDetailsUrl = "details.jsp?postId=" + post.getPostId();
@@ -71,7 +92,7 @@
                             <div class="row">
                                 <span class="font-weight-thin" style="color:dimgrey">
                                     Posted by
-                                <a class="font-weight-thin" style="color:dimgrey" href="index.jsp"><%=post.getAuthor().getUserName()%></a>, <%=post.getTimePassedSinceCreation()%>
+                                <a class="font-weight-thin" style="color:dimgrey" href="index.jsp?user=<%=post.getAuthor().getUserName()%>"><%=post.getAuthor().getUserName()%></a>, <%=post.getTimePassedSinceCreation()%>
                                 </span>
                             </div>
                             <div class="row">

@@ -3,6 +3,7 @@ package com.example.RedditClone.posts;
 import com.example.RedditClone.commentVotes.CommentVoteController;
 import com.example.RedditClone.comments.Comment;
 import com.example.RedditClone.comments.CommentController;
+import com.example.RedditClone.helpers.Comparators;
 import com.example.RedditClone.helpers.DatabaseConnectionManager;
 import com.example.RedditClone.helpers.ParameterMapping;
 import com.example.RedditClone.helpers.Parameters;
@@ -16,10 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PostController
 {
@@ -223,6 +221,78 @@ public class PostController
         }
 
         return null;
+    }
+
+    public List<Post> GetUserPosts(String userName)
+    {
+        UserController userController = new UserController();
+        User user = userController.GetUserByName(userName);
+
+        String sql = "SELECT * FROM posts WHERE userId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, user.getUserId());
+
+            ResultSet rs = ps.executeQuery();
+
+            PostVoteController postVoteController = new PostVoteController();
+
+            List<Post> posts = new ArrayList<>();
+
+            while (rs.next())
+            {
+                Post post = new Post();
+
+                post.setAuthor(user);
+
+                post.setPostId(rs.getInt(Parameters.PostParams.postId));
+                post.setHeader(rs.getString(Parameters.PostParams.postHeader));
+                post.setBody(rs.getString(Parameters.PostParams.postBody));
+                post.setPoints(rs.getInt(Parameters.PostParams.postPoints));
+                post.setCreateTime(rs.getLong(Parameters.PostParams.createTime));
+
+                List<PostVote> postVotes = postVoteController.GetAllPostVotesForPost(post.getPostId());
+
+                int points = 0;
+                for (PostVote postVote : postVotes)
+                {
+                    if (postVote.isUpvote())
+                        points++;
+                    else
+                        points--;
+                }
+
+                post.setPoints(points);
+                post.setPostVotes((ArrayList<PostVote>) postVotes);
+
+                CommentController commentController = new CommentController();
+                List<Comment> comments = commentController.GetCommentsForPost(post.getPostId());
+                post.setComments((ArrayList<Comment>) comments);
+
+                posts.add(post);
+            }
+            return posts;
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Post> SortPostsByVotes(List<Post> posts)
+    {
+        posts.sort(new Comparators.PostVotesComparator());
+        return posts;
+    }
+
+    public List<Post> SortPostsByDate(List<Post> posts)
+    {
+        posts.sort(new Comparators.PostDateComparator());
+        return posts;
     }
 
     public Post MapParamsToPost(Map<String, String[]> params)
