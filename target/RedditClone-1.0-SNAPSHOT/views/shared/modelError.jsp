@@ -1,12 +1,12 @@
-<%@ page import="com.example.RedditClone.errors.ModelError" %>
+<%@ page import="com.example.RedditClone.modelMessages.ModelMessage" %>
 <%
-    ModelError modelError = (ModelError) request.getAttribute(Parameters.ErrorParams.modelError);
+    ModelMessage modelMessage = (ModelMessage) request.getAttribute(Parameters.ModelParams.modelMessage);
 
-    if (modelError != null)
+    if (modelMessage != null)
     {
 %>
     <div class="form-group">
-        <span class="text-danger"><%=modelError.getErrorMessage()%></span>
+        <span class="<%=modelMessage.isErrorMessage() ? "text-danger" : "text-success"%>"><%=modelMessage.getMessage()%></span>
     </div>
 <%
     }

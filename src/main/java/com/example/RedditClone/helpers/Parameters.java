@@ -43,8 +43,8 @@ public class Parameters
         public static String sessionUser = "sessionUser";
     }
 
-    public static class ErrorParams
+    public static class ModelParams
     {
-        public static String modelError = "modelError";
+        public static String modelMessage = "modelMessage";
     }
 }

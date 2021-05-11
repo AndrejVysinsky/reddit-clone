@@ -42,6 +42,9 @@
                             <label class="font-weight-bold text-white" for="<%=Parameters.UserParams.userPassword%>">Confirm new password:</label>
                             <input class="form-control" type="password" name="<%=Parameters.UserParams.userPasswordConfirmation%>">
                         </div>
+
+                        <%@include file="../shared/modelError.jsp"%>
+
                         <button class="btn btn-primary" formmethod="post">Change password</button>
                     </form>
                 </div>

@@ -133,6 +133,26 @@ public class UserController
         return null;
     }
 
+    public boolean UpdateUserPassword(User user, String newPassword)
+    {
+        String sql = "UPDATE users SET userPassword = ? WHERE userId = ?";
+
+        try {
+            Connection con = DatabaseConnectionManager.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, newPassword);
+            ps.setInt(2, user.getUserId());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public User GetLoggedInUser(HttpServletRequest request)
     {
         HttpSession session = request.getSession(true);

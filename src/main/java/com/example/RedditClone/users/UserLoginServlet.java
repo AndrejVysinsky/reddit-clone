@@ -1,6 +1,6 @@
 package com.example.RedditClone.users;
 
-import com.example.RedditClone.errors.ModelError;
+import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
 
@@ -35,10 +35,10 @@ public class UserLoginServlet extends HttpServlet {
         {
             //wrong password or user does not exist
 
-            ModelError modelError = new ModelError();
-            modelError.setErrorMessage("Incorrect password or username does not exist.");
+            ModelMessage modelMessage = new ModelMessage();
+            modelMessage.setMessage("Incorrect password or username does not exist.", true);
 
-            request.setAttribute(Parameters.ErrorParams.modelError, modelError);
+            request.setAttribute(Parameters.ModelParams.modelMessage, modelMessage);
             request.getRequestDispatcher(Redirects.UserRedirects.userLogin).forward(request, response);
         }
     }

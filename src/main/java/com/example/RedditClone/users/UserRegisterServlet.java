@@ -1,6 +1,6 @@
 package com.example.RedditClone.users;
 
-import com.example.RedditClone.errors.ModelError;
+import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
 
@@ -25,12 +25,12 @@ public class UserRegisterServlet extends HttpServlet {
 
         User userDb = userController.GetUserByName(user.getUserName());
 
-        ModelError modelError = new ModelError();
+        ModelMessage modelMessage = new ModelMessage();
 
         if (user.isValid() == false)
         {
-            modelError.setErrorMessage("Model validation error.");
-            request.setAttribute(Parameters.ErrorParams.modelError, modelError);
+            modelMessage.setMessage("Model validation error.", true);
+            request.setAttribute(Parameters.ModelParams.modelMessage, modelMessage);
             request.getRequestDispatcher(Redirects.UserRedirects.userRegister).forward(request, response);
             return;
         }
@@ -54,22 +54,22 @@ public class UserRegisterServlet extends HttpServlet {
                 }
                 else
                 {
-                    modelError.setErrorMessage("Unexpected error. Account could not be created.");
+                    modelMessage.setMessage("Unexpected error. Account could not be created.", true);
                 }
             }
             else
             {
                 //password mismatch
-                modelError.setErrorMessage("Passwords do not match.");
+                modelMessage.setMessage("Passwords do not match.", true);
             }
         }
         else
         {
             //userName is already taken, show error
-            modelError.setErrorMessage("User with this name already exists.");
+            modelMessage.setMessage("User with this name already exists.", true);
         }
 
-        request.setAttribute(Parameters.ErrorParams.modelError, modelError);
+        request.setAttribute(Parameters.ModelParams.modelMessage, modelMessage);
         request.getRequestDispatcher(Redirects.UserRedirects.userRegister).forward(request, response);
     }
 }
