@@ -1,5 +1,7 @@
 package com.example.RedditClone.users;
 
+import com.example.RedditClone.helpers.ModelConstraints;
+
 public class User
 {
     private Integer userId;
@@ -49,5 +51,22 @@ public class User
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public boolean isValid()
+    {
+        if (userName.length() < ModelConstraints.UserConstraints.minUsernameLength
+        || userName.length() > ModelConstraints.UserConstraints.maxUsernameLength)
+        {
+            return false;
+        }
+
+        if (password.length() < ModelConstraints.UserConstraints.minPasswordLength
+        || password.length() > ModelConstraints.UserConstraints.maxPasswordLength)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

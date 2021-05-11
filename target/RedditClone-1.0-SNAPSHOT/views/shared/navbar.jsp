@@ -17,23 +17,23 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="../posts/index.jsp">Fake Reddit</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/views/posts/index.jsp">Fake Reddit</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a class="nav-link" href="../posts/index.jsp">Posts</a></li>
+                <li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/views/posts/index.jsp">Posts</a></li>
                 <%
                     if (sessionUser == null)
                     {
                 %>
-                        <li class="nav-item"><a class="nav-link" href="../users/login.jsp">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../users/register.jsp">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/users/login.jsp">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/users/register.jsp">Register</a></li>
                 <%
                     }
                     else
                     {
                 %>
-                        <li class="nav-item"><a class="nav-link" href="../users/profile.jsp"><%=sessionUser.getUserName()%></a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/views/users/profile.jsp"><%=sessionUser.getUserName()%></a></li>
                         <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/user-logout">Logout</a></li>
                 <%
                     }

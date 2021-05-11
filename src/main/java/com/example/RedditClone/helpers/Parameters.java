@@ -42,4 +42,9 @@ public class Parameters
     {
         public static String sessionUser = "sessionUser";
     }
+
+    public static class ErrorParams
+    {
+        public static String modelError = "modelError";
+    }
 }

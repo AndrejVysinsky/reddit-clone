@@ -1,5 +1,6 @@
 package com.example.RedditClone.users;
 
+import com.example.RedditClone.errors.ModelError;
 import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
 
@@ -24,6 +25,16 @@ public class UserRegisterServlet extends HttpServlet {
 
         User userDb = userController.GetUserByName(user.getUserName());
 
+        ModelError modelError = new ModelError();
+
+        if (user.isValid() == false)
+        {
+            modelError.setErrorMessage("Model validation error.");
+            request.setAttribute(Parameters.ErrorParams.modelError, modelError);
+            request.getRequestDispatcher(Redirects.UserRedirects.userRegister).forward(request, response);
+            return;
+        }
+
         if (userDb == null)
         {
             //userName is free
@@ -38,22 +49,27 @@ public class UserRegisterServlet extends HttpServlet {
                     HttpSession session = request.getSession(true);
                     session.setAttribute(Parameters.SessionParams.sessionUser, userDb);
                     response.sendRedirect(Redirects.PostRedirects.postIndex);
+
+                    return;
                 }
                 else
                 {
-                    response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=unexpectedError");
+                    modelError.setErrorMessage("Unexpected error. Account could not be created.");
                 }
             }
             else
             {
                 //password mismatch
-                response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=passwordMismatch");
+                modelError.setErrorMessage("Passwords do not match.");
             }
         }
         else
         {
             //userName is already taken, show error
-            response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=nameTaken");
+            modelError.setErrorMessage("User with this name already exists.");
         }
+
+        request.setAttribute(Parameters.ErrorParams.modelError, modelError);
+        request.getRequestDispatcher(Redirects.UserRedirects.userRegister).forward(request, response);
     }
 }
