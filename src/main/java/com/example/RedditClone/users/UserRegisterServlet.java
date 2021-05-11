@@ -1,5 +1,6 @@
 package com.example.RedditClone.users;
 
+import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
 
 import javax.servlet.*;
@@ -30,15 +31,24 @@ public class UserRegisterServlet extends HttpServlet {
             if (user.getPassword().equals(user.getPasswordConfirmation()))
             {
                 //add new user to db
-                userController.RegisterUser(user);
-                response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=success");
+                if (userController.RegisterUser(user))
+                {
+                    userDb = userController.GetUserByName(user.getUserName());
+
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute(Parameters.SessionParams.sessionUser, userDb);
+                    response.sendRedirect(Redirects.PostRedirects.postIndex);
+                }
+                else
+                {
+                    response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=unexpectedError");
+                }
             }
             else
             {
                 //password mismatch
                 response.sendRedirect(Redirects.UserRedirects.userRegister + "?message=passwordMismatch");
             }
-
         }
         else
         {

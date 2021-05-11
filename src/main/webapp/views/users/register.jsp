@@ -16,28 +16,32 @@
             }
         %>
 
-        <div class="container">
-            <form action="${pageContext.request.contextPath}/user-register">
-                <h5>Create new account</h5>
-                <div class="form-group">
-                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userName%>">User name:</label>
-                    <input class="form-control" type="text" name="<%=Parameters.UserParams.userName%>">
+        <div class="container myContainer">
+            <div class="row justify-content-center" style="margin-bottom: 20px">
+                <div class="col-7 bg-dark rounded" style="padding: 15px">
+                    <form action="${pageContext.request.contextPath}/user-register">
+                        <h4 class="text-white">Create new account</h4>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="<%=Parameters.UserParams.userName%>">User name:</label>
+                            <input class="form-control" type="text" name="<%=Parameters.UserParams.userName%>">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="<%=Parameters.UserParams.userPassword%>">Password:</label>
+                            <input class="form-control" type="password" name="<%=Parameters.UserParams.userPassword%>">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="<%=Parameters.UserParams.userPasswordConfirmation%>">Password confirmation:</label>
+                            <input class="form-control" type="password" name="<%=Parameters.UserParams.userPasswordConfirmation%>">
+                        </div>
+
+                        <%@include file="../shared/modelError.jsp"%>
+
+                        <button formmethod="post" class="btn btn-primary">Register</button>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userPassword%>">Password:</label>
-                    <input class="form-control" type="password" name="<%=Parameters.UserParams.userPassword%>">
-                </div>
-
-                <div class="form-group">
-                    <label class="font-weight-bold" for="<%=Parameters.UserParams.userPasswordConfirmation%>">Password confirmation:</label>
-                    <input class="form-control" type="password" name="<%=Parameters.UserParams.userPasswordConfirmation%>">
-                </div>
-
-                <%@include file="../shared/modelError.jsp"%>
-
-                <button formmethod="post" class="btn btn-primary">Register</button>
-            </form>
+            </div>
         </div>
     </body>
 </html>
