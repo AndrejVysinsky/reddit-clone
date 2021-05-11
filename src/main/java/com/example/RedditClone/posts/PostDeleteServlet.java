@@ -1,6 +1,8 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
+import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.users.User;
 import com.example.RedditClone.users.UserController;
 
@@ -25,7 +27,15 @@ public class PostDeleteServlet extends HttpServlet {
         PostController postController = new PostController();
         Post post = postController.MapParamsToPost(request.getParameterMap());
 
-        if (post.getPostId() != null && sessionUser != null)
+        if (sessionUser == null)
+        {
+            response.sendRedirect(Redirects.PostRedirects.postIndex);
+            return;
+        }
+
+        ModelMessage modelMessage = new ModelMessage();
+
+        if (post.getPostId() != null)
         {
             Post postDb = postController.GetPostById(post.getPostId());
 
@@ -36,11 +46,26 @@ public class PostDeleteServlet extends HttpServlet {
                 if (result > 0)
                 {
                     response.sendRedirect(Redirects.PostRedirects.postIndex);
-                    return;
+                }
+                else
+                {
+                    modelMessage.setMessage("Error occurred. Post was not deleted.", true);
                 }
             }
+            else
+            {
+                //not yours to remove
+                modelMessage.setMessage("You do not have permission to remove this post.", true);
+            }
+        }
+        else
+        {
+            //not specified postId
+            response.sendRedirect(Redirects.PostRedirects.postIndex);
+            return;
         }
 
-        response.sendRedirect(Redirects.PostRedirects.postIndex + "?message=fail");
+        request.setAttribute(Parameters.ModelParams.modelMessage, modelMessage);
+        request.getRequestDispatcher(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId()).forward(request, response);
     }
 }

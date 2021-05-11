@@ -2,6 +2,7 @@ package com.example.RedditClone.posts;
 
 import com.example.RedditClone.comments.Comment;
 import com.example.RedditClone.helpers.DateFormatter;
+import com.example.RedditClone.helpers.ModelConstraints;
 import com.example.RedditClone.postVotes.PostVote;
 import com.example.RedditClone.users.User;
 
@@ -119,5 +120,28 @@ public class Post
 
     public void setComments(ArrayList<Comment> comments) {
         this.comments = comments;
+    }
+
+    public boolean isValid()
+    {
+        if (header.length() < ModelConstraints.PostConstraints.minPostHeaderLength
+        || header.length() > ModelConstraints.PostConstraints.maxPostHeaderLength)
+        {
+            return false;
+        }
+
+        if (body.length() < ModelConstraints.PostConstraints.minPostBodyLength
+        || body.length() > ModelConstraints.PostConstraints.maxPostBodyLength)
+        {
+            return false;
+        }
+
+        if (createTime <= 0)
+            return false;
+
+        if (author == null)
+            return false;
+
+        return true;
     }
 }

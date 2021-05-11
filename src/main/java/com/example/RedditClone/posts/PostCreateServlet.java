@@ -1,6 +1,8 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
+import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.users.User;
 import com.example.RedditClone.users.UserController;
 
@@ -25,16 +27,28 @@ public class PostCreateServlet extends HttpServlet {
         PostController postController = new PostController();
         Post post = postController.MapParamsToPost(request.getParameterMap());
 
-        if (post.getHeader() != null && post.getBody() != null && sessionUser != null)
+        if (sessionUser == null)
         {
-            post.setAuthor(sessionUser);
-            post.setCreateTime(System.currentTimeMillis());
-            post = postController.CreatePost(post);
-
-            response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId());
+            response.sendRedirect(Redirects.PostRedirects.postIndex);
             return;
         }
 
-        response.sendRedirect(Redirects.PostRedirects.postCreate + "?message=fail");
+        post.setAuthor(sessionUser);
+        post.setCreateTime(System.currentTimeMillis());
+
+        if (post.isValid())
+        {
+            post = postController.CreatePost(post);
+
+            response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId());
+        }
+        else
+        {
+            ModelMessage modelMessage = new ModelMessage();
+            modelMessage.setMessage("Model validation error.", true);
+
+            request.setAttribute(Parameters.ModelParams.modelMessage, modelMessage);
+            request.getRequestDispatcher(Redirects.PostRedirects.postCreate).forward(request, response);
+        }
     }
 }
