@@ -26,6 +26,9 @@
                 <div class="form-group">
                     <textarea type="text" name="<%=Parameters.PostParams.postBody%>" class="form-control" rows="10"></textarea>
                 </div>
+
+                <%@include file="../shared/modelError.jsp"%>
+
                 <button formmethod="post" class="btn btn-primary">Create</button>
             </form>
         </div>

@@ -1,6 +1,8 @@
 package com.example.RedditClone.posts;
 
+import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
+import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.users.User;
 import com.example.RedditClone.users.UserController;
 
@@ -25,24 +27,28 @@ public class PostEditServlet extends HttpServlet {
         PostController postController = new PostController();
         Post post = postController.MapParamsToPost(request.getParameterMap());
 
-        if (post.getPostId() != null && post.getHeader() != null && post.getBody() != null && sessionUser != null)
+        Post postDb = postController.GetPostById(post.getPostId());
+
+        if (sessionUser == null || post.getPostId() == null || sessionUser.getUserId().equals(post.getAuthor().getUserId()) == false)
         {
-            Post postDb = postController.GetPostById(post.getPostId());
-
-            if (sessionUser.getUserId().equals(postDb.getAuthor().getUserId()))
-            {
-                post.setAuthor(sessionUser);
-                post.setCreateTime(System.currentTimeMillis());
-                int result = postController.UpdatePost(post);
-
-                if (result > 0)
-                {
-                    response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId());
-                    return;
-                }
-            }
+            response.sendRedirect(Redirects.PostRedirects.postIndex);
+            return;
         }
 
-        response.sendRedirect(Redirects.PostRedirects.postIndex + "?message=fail");
+        if (post.isValid())
+        {
+            post.setAuthor(sessionUser);
+            postController.UpdatePost(post);
+
+            response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId());
+        }
+        else
+        {
+            ModelMessage modelMessage = new ModelMessage();
+            modelMessage.setMessage("Model validation error.", true);
+
+            request.setAttribute(Parameters.ModelParams.modelMessage, modelMessage);
+            request.getRequestDispatcher(Redirects.PostRedirects.postEdit).forward(request, response);
+        }
     }
 }

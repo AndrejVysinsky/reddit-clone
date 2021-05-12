@@ -32,7 +32,7 @@
 
                     <hr>
 
-                    <h5 class="text-white">Reset password</h5>
+                    <h5 class="text-white">Update password</h5>
                     <form action="${pageContext.request.contextPath}/user-password-update">
                         <div class="form-group">
                             <label class="font-weight-bold text-white" for="<%=Parameters.UserParams.userPassword%>">New password:</label>

@@ -7,6 +7,7 @@ public class Redirects
         public static String postIndex = "views/posts/index.jsp";
         public static String postCreate = "views/posts/create.jsp";
         public static String postDetails = "views/posts/details.jsp";
+        public static String postEdit = "views/posts/edit.jsp";
     }
 
     public static class UserRedirects
