@@ -46,6 +46,7 @@ public class PostDeleteServlet extends HttpServlet {
                 if (result > 0)
                 {
                     response.sendRedirect(Redirects.PostRedirects.postIndex);
+                    return;
                 }
                 else
                 {

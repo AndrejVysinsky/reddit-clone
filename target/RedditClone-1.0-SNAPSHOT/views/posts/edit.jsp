@@ -46,6 +46,8 @@
 
                 <input type="hidden" name="<%=Parameters.PostParams.postId%>" value="<%=post.getPostId()%>">
 
+                <%@include file="../shared/modelError.jsp"%>
+
                 <button formmethod="post" class="btn btn-primary">Create</button>
             </form>
         </div>

@@ -3,6 +3,7 @@ package com.example.RedditClone.users;
 import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,9 +23,9 @@ public class UserLoginServlet extends HttpServlet {
         UserController userController = new UserController();
         User user = userController.MapParamsToUser(request.getParameterMap());
 
-        User userDb = userController.LoginUser(user);
+        User userDb = userController.GetUserByName(user.getUserName());
 
-        if (userDb != null)
+        if (userDb != null && BCrypt.checkpw(user.getPassword(), userDb.getPassword()))
         {
             //logged in, save user to session
             HttpSession session = request.getSession(true);

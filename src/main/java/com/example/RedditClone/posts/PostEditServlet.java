@@ -29,15 +29,17 @@ public class PostEditServlet extends HttpServlet {
 
         Post postDb = postController.GetPostById(post.getPostId());
 
-        if (sessionUser == null || post.getPostId() == null || sessionUser.getUserId().equals(post.getAuthor().getUserId()) == false)
+        if (sessionUser == null || post.getPostId() == null || sessionUser.getUserId().equals(postDb.getAuthor().getUserId()) == false)
         {
             response.sendRedirect(Redirects.PostRedirects.postIndex);
             return;
         }
 
+        post.setCreateTime(postDb.getCreateTime());
+        post.setAuthor(sessionUser);
+
         if (post.isValid())
         {
-            post.setAuthor(sessionUser);
             postController.UpdatePost(post);
 
             response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + post.getPostId());

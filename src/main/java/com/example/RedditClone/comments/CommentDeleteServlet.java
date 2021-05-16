@@ -37,7 +37,7 @@ public class CommentDeleteServlet extends HttpServlet {
 
                 if (result > 0)
                 {
-                    response.sendRedirect(Redirects.PostRedirects.postIndex);
+                    response.sendRedirect(Redirects.PostRedirects.postDetails + "?postId=" + commentDb.getPostId());
                     return;
                 }
             }
