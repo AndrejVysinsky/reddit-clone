@@ -3,6 +3,7 @@ package com.example.RedditClone.users;
 import com.example.RedditClone.modelMessages.ModelMessage;
 import com.example.RedditClone.helpers.Parameters;
 import com.example.RedditClone.helpers.Redirects;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -40,6 +41,9 @@ public class UserPasswordUpdateServlet extends HttpServlet {
         {
             if (user.getPassword().equals(user.getPasswordConfirmation()))
             {
+                String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+                user.setPassword(passwordHash);
+                
                 //passwords match and is valid, update it
                 boolean result = userController.UpdateUserPassword(sessionUser, user.getPassword());
 

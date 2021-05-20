@@ -44,14 +44,18 @@
                     {
                         String sortBy = request.getParameter("sort");
 
-                        if (sortBy.equals("new"))
-                        {
-                            posts = (ArrayList<Post>) postController.SortPostsByDate(posts);
-                        }
-                        else if (sortBy.equals("top"))
+                        if (sortBy.equals("top"))
                         {
                             posts = (ArrayList<Post>) postController.SortPostsByVotes(posts);
                         }
+                        else
+                        {
+                            posts = (ArrayList<Post>) postController.SortPostsByDate(posts);
+                        }
+                    }
+                    else
+                    {
+                        posts = (ArrayList<Post>) postController.SortPostsByDate(posts);
                     }
                 }
 

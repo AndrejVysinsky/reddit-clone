@@ -22,8 +22,8 @@ public class Comparators
         @Override
         public int compare(Post o1, Post o2) {
 
-            if (o1.getCreateTime() < o2.getCreateTime()) { return -1; }
-            else if (o1.getCreateTime() > o2.getCreateTime()) { return 1; }
+            if (o1.getCreateTime() < o2.getCreateTime()) { return 1; }
+            else if (o1.getCreateTime() > o2.getCreateTime()) { return -1; }
             return 0;
         }
     }

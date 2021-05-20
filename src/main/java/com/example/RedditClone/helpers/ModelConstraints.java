@@ -14,7 +14,7 @@ public class ModelConstraints
     public static class PostConstraints
     {
         public static int minPostHeaderLength = 3;
-        public static int maxPostHeaderLength = Integer.MAX_VALUE;
+        public static int maxPostHeaderLength = 100;
 
         public static int minPostBodyLength = 3;
         public static int maxPostBodyLength = Integer.MAX_VALUE;
